@@ -47,7 +47,7 @@ class NiceHash:
     """
     def __init__(self):
         self._session = requests.Session()
-        self._session.headers.update({'Cookie': '__cfduid=d1f479f91284d18655ebf5ced80fbdbe21527119214; lang=en; PHPSESSID=51b620pl6vgbvkk74hvkdgk0v3; fiat=USD; _device=b3fb70417ae50dc005e08eff58f5068c3879a393'})
+        self._session.headers.update({'Cookie': '__cfduid=d1f479f91284d18655ebf5ced80fbdbe21527119214; lang=en; fiat=USD; cf_clearance=9755055ce70e02f83ed6b33abfae01c32f00eb2c-1527175191-300; PHPSESSID=9f64fqdb6oh494ft12l7olqt1s; _device=68d0845e3a0d176169b9711b01325a28b36c6086'})
         self._buy_info = requests.get('https://api.nicehash.com/api?method=buy.info').json()
 
     def get_cost(self, algorithm, amount):
@@ -69,11 +69,11 @@ class NiceHash:
                 resp = self._session.get('https://www.nicehash.com/siteapi/market/{}/{}/fixed?limit={}'.format(index, country, max_fixed_price)).json()
                 if resp['fixedPrice'] == 'Not enough hashing power available.':
                     continue
+                day_cost_btc += float(resp['fixedPrice']) * max_fixed_price
                 amount -= max_fixed_price
-                day_cost_btc += float(resp['fixedPrice'])
             else:
+                day_cost_btc += float(resp['fixedPrice']) * amount
                 amount -= amount
-                day_cost_btc += float(resp['fixedPrice'])
             if amount <= 0.0:
                 return day_cost_btc
         return None

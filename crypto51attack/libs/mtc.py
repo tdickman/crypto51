@@ -32,10 +32,11 @@ class MTC:
     def get_details(self, link):
         resp = self._session.get(link)
         html = resp.html
-        hash_rate = html.find('.stats tr')[2].find('td', first=True).text
-        hash_rate = self._get_gh_hash_rate(hash_rate)
+        hash_rate_pretty = html.find('.stats tr')[2].find('td', first=True).text
+        hash_rate = self._get_gh_hash_rate(hash_rate_pretty)
         return {
             'market_cap': html.find('.stats tr')[3].find('td', first=True).text,
+            'hash_rate_pretty': hash_rate_pretty,
             'hash_rate': hash_rate,
             'algorithm': html.find('.text-primary strong a', first=True).text
         }
