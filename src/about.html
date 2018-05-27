@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cost of a 51% Attack for Different Cryptocurrencies | 51Crypto </title>
+    <title>About | 51Crypto</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,40 +25,12 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">PoW Coin Risk</h1>
-      <p class="lead">This is a collection of coins along and the cost to perform a 51% attack on the network.</p>
+      <h1 class="display-4">Why?</h1>
     </div>
 
     <div class="container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Symbol</th>
-            <th scope="col">Market Cap</th>
-            <th scope="col">Algorithm</th>
-            <th scope="col">Hash Rate</th>
-            <th scope="col">1h Attack Cost</th>
-            <th scope="col">NiceHash-able</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for coin in results.coins %}
-          <tr>
-            <!-- <td><a href="{{ coin.cmc_link }}"><i class="cc {{coin.symbol }}"></i> {{ coin.name }}</a></td> -->
-            <td><a href="coins/{{ coin.symbol }}.html">{{ coin.name }}</a></td>
-            <td>{{ coin.symbol }}</td>
-            <td>{{ coin.market_cap }}</td>
-            <td>{{ coin.algorithm }}</td>
-            <td>{{ coin.hash_rate_pretty }}</td>
-            <td>{{ coin.hour_cost }}</td>
-            <td>{{ coin.nicehash_hash_percentage }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <p>Test</p>
     </div>
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

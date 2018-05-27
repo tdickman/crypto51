@@ -6,17 +6,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cost of a 51% Attack for Different Cryptocurrencies</title>
+    <title>{{ coin.name }} ({{ coin.symbol }})| 51Crypto </title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="style.css" rel="stylesheet">
-
-    <!-- Coin icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cryptocoins-icons@2.7.0/webfont/cryptocoins.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cryptocoins-icons@2.7.0/webfont/cryptocoins-colors.css">
   </head>
 
   <body>
@@ -50,7 +46,11 @@
           </tr>
           <tr>
             <td>Nicehash cost</td>
-            <td><a target="_blank" href="https://www.nicehash.com/marketplace/{{ coin.nicehash_algorithm_name }}">{{ coin.nicehash_price }} BTC/{{ coin.nicehash_units }}/day</a></td>
+            <td><a target="_blank" href="https://www.nicehash.com/marketplace/{{ coin.nicehash_algorithm_name }}">{{ coin.nicehash_price_btc }} BTC / {{ coin.nicehash_units }} / day</a></td>
+          </tr>
+          <tr>
+            <td>Nicehash cost / hr</td>
+            <td>${{ coin.nicehash_price_usd_hour }} / {{ coin.nicehash_units }} / hour</td>
           </tr>
           <tr>
             <td>Estimated cost of 1 hour 51% attack</td>

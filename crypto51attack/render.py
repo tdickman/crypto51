@@ -3,6 +3,14 @@ from jinja2 import Template
 
 
 def render(results):
+    with open('src/style.css', 'r') as f:
+        with open('dist/style.css', 'w') as g:
+            g.write(f.read())
+
+    with open('src/about.html', 'r') as f:
+        with open('dist/about.html', 'w') as g:
+            g.write(f.read())
+
     with open('src/index.html', 'r') as f:
         template = Template(f.read())
         with open('dist/index.html', 'w') as g:

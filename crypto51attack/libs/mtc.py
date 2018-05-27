@@ -15,28 +15,27 @@ class MTC:
             }
         return []
 
-    def _get_gh_hash_rate(self, text):
-        """Convert the hash rate string to a gh/s hash rate."""
+    def _get_h_hash_rate(self, text):
+        """Convert the hash rate string to a h/s hash rate."""
         value, units = text.split(' ')
         value = float(value.replace(',', ''))
         if units == 'KH/s':
-            return value / 1000000.0
+            return value * (1000.0 ** 1)
         elif units == 'MH/s':
-            return value / 1000.0
+            return value * (1000.0 ** 2)
         elif units == 'GH/s':
-            return value
+            return value * (1000.0 ** 3)
         elif units == 'TH/s':
-            return value * 1000.0
+            return value * (1000.0 ** 4)
         raise Exception('Unknown units: {}'.format(units))
 
     def get_details(self, link):
         resp = self._session.get(link)
         html = resp.html
         hash_rate_pretty = html.find('.stats tr')[2].find('td', first=True).text
-        hash_rate = self._get_gh_hash_rate(hash_rate_pretty)
+        hash_rate = self._get_h_hash_rate(hash_rate_pretty)
         return {
             'market_cap': html.find('.stats tr')[3].find('td', first=True).text,
-            'hash_rate_pretty': hash_rate_pretty,
             'hash_rate': hash_rate,
             'algorithm': html.find('.text-primary strong a', first=True).text
         }
