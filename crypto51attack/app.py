@@ -29,8 +29,12 @@ if __name__ == '__main__':
             if not listing or data['name'] == 'Bitgem':
                 continue
 
+            data['nicehash_capacity'] = nh.get_capacity(details['algorithm'])
+            data['nicehash_algorithm_name'] = nh.get_algorithm_name(details['algorithm'])
+            data['nicehash_units'] = nh.get_units(details['algorithm'])
+            data['nicehash_price'] = nh.get_algorithm_price(details['algorithm'])
             data['hour_cost'] = '${:,.0f}'.format(cost * listings['BTC']['price'] / 24.0)
-            data['nh_hash_percentage'] = '{:,.0f}%'.format(nh_hash_percentage * 100.0)
+            data['nicehash_hash_percentage'] = '{:,.0f}%'.format(nh_hash_percentage * 100.0)
             data['market_cap'] = '${:,.0f}'.format(listing['market_cap']) if listing['market_cap'] else None
             data['rank'] = listing['rank']
             data['cmc_slug'] = listing['website_slug']

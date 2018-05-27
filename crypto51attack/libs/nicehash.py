@@ -95,6 +95,11 @@ class NiceHash:
             return value * 1000000.0
         raise Exception('Unknown units: {}'.format(units))
 
+    def get_units(self, algorithm):
+        index = self._get_algorithm_index(algorithm)
+        units = self._buy_info['result']['algorithms'][index]['speed_text']
+        return units
+
     def get_orders(self, algorithm):
         index = self._get_algorithm_index(algorithm)
         if index is None:
@@ -102,14 +107,30 @@ class NiceHash:
         resp = requests.get('https://api.nicehash.com/api?method=orders.get&location=1&algo={}'.format(index))
         return resp.json()['result']['orders']
 
-    def _get_algorithm_index(self, algorithm):
+    def get_algorithm_name(self, algorithm):
+        """Get the cleaned up algorithm name that nicehash uses."""
         algorithm = algorithm.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').lower()
+        return algorithm
+
+    def _get_algorithm_index(self, algorithm):
+        algorithm = self.get_algorithm_name(algorithm)
         algorithm = remap_algorithms.get(algorithm, algorithm)
         try:
             index = algorithms.index(algorithm)
         except ValueError:
             return None
         return index
+
+    def get_algorithm_price(self, algorithm):
+        """Get the hashing cost (BTC) + units.
+
+        Value is returned in BTC/UNITS/DAY.
+        """
+        index = self._get_algorithm_index(algorithm)
+        if index is None:
+            return None
+        pricing = float(self._global_stats['result']['stats'][index]['price'])
+        return pricing
 
     def get_cost_global(self, algorithm, hash_rate_ghs):
         """Return the global pricing for the specified algorithm.
@@ -124,6 +145,13 @@ class NiceHash:
         pricing = float(self._global_stats['result']['stats'][index]['price'])
         print(algorithm, hash_rate, pricing, pricing * hash_rate)
         return pricing * hash_rate
+
+    def get_capacity(self, algorithm):
+        index = self._get_algorithm_index(algorithm)
+        if index is None:
+            return None
+        nicehash_speed = float(self._global_stats['result']['stats'][index]['speed'])
+        return nicehash_speed
 
     def get_hash_percentage(self, algorithm, hash_rate_ghs):
         """Return the percent of the network hash rate the hash_rate_ghs represents."""

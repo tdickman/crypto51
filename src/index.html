@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Cryptocurrencies that are Vulnerable to a 51% Attack</title>
+    <title>Cost of a 51% Attack for Different Cryptocurrencies</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -23,7 +22,7 @@
   <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 class="my-0 mr-md-auto font-weight-normal">51crypto</h5>
+      <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">51crypto</a></h5>
       <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="#">About</a>
       </nav>
@@ -53,13 +52,13 @@
           <tr>
             <th scope="row">{{ coin.rank }}</th>
             <!-- <td><a href="{{ coin.cmc_link }}"><i class="cc {{coin.symbol }}"></i> {{ coin.name }}</a></td> -->
-            <td><a href="https://www.coinmarketcap.com/currencies/{{ coin.cmc_slug }}">{{ coin.name }}</a></td>
+            <td><a href="coins/{{ coin.symbol }}.html">{{ coin.name }}</a></td>
             <td>{{ coin.symbol }}</td>
             <td>{{ coin.market_cap }}</td>
             <td>{{ coin.algorithm }}</td>
             <td>{{ coin.hash_rate_pretty }}</td>
             <td>{{ coin.hour_cost }}</td>
-            <td>{{ coin.nh_hash_percentage }}</td>
+            <td>{{ coin.nicehash_hash_percentage }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -109,16 +108,5 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../../../dist/js/bootstrap.min.js"></script>
-    <script src="../../../../assets/js/vendor/holder.min.js"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
   </body>
 </html>

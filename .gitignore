@@ -1,3 +1,4 @@
 results.json
 dist/index.html
+dist/coins/*.html
 .env
