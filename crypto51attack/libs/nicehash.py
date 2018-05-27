@@ -47,8 +47,9 @@ class NiceHash:
     """
     def __init__(self):
         self._session = requests.Session()
-        self._session.headers.update({'Cookie': '__cfduid=d1f479f91284d18655ebf5ced80fbdbe21527119214; lang=en; fiat=USD; cf_clearance=9755055ce70e02f83ed6b33abfae01c32f00eb2c-1527175191-300; PHPSESSID=9f64fqdb6oh494ft12l7olqt1s; _device=68d0845e3a0d176169b9711b01325a28b36c6086'})
+        # self._session.headers.update({'Cookie': os.env['NICEHASH_COOKIE']})
         self._buy_info = requests.get('https://api.nicehash.com/api?method=buy.info').json()
+        self._global_stats = requests.get('https://api.nicehash.com/api?method=stats.global.current').json()
 
     def get_cost(self, algorithm, amount):
         """Calculate the cost / hr to obtain the required hash rate with fixed contracts.
@@ -110,8 +111,27 @@ class NiceHash:
             return None
         return index
 
+    def get_cost_global(self, algorithm, hash_rate_ghs):
+        """Return the global pricing for the specified algorithm.
 
-if __name__ == '__main__':
-    nh = NiceHash()
-    cost = nh.get_cost('sha256')
-    print(cost)
+        Speed in gh/s, and price in btc per gh/s per day.
+        """
+        index = self._get_algorithm_index(algorithm)
+        if index is None:
+            return None
+        # Convert hash rate to the units used by NiceHash.
+        hash_rate = self._get_in_nicehash_units(algorithm, hash_rate_ghs)
+        pricing = float(self._global_stats['result']['stats'][index]['price'])
+        print(algorithm, hash_rate, pricing, pricing * hash_rate)
+        return pricing * hash_rate
+
+    def get_hash_percentage(self, algorithm, hash_rate_ghs):
+        """Return the percent of the network hash rate the hash_rate_ghs represents."""
+        index = self._get_algorithm_index(algorithm)
+        if index is None:
+            return None
+        # Convert hash rate to the units used by NiceHash.
+        hash_rate = self._get_in_nicehash_units(algorithm, hash_rate_ghs)
+        nicehash_speed = float(self._global_stats['result']['stats'][index]['speed'])
+        print(algorithm, nicehash_speed, hash_rate)
+        return nicehash_speed / hash_rate_ghs

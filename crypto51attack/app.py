@@ -13,7 +13,8 @@ if __name__ == '__main__':
     results = []
     for coin in mtc.get_coins():
         details = mtc.get_details(coin['link'])
-        cost = nh.get_cost(details['algorithm'], details['hash_rate'])
+        cost = nh.get_cost_global(details['algorithm'], details['hash_rate'])
+        nh_hash_percentage = nh.get_hash_percentage(details['algorithm'], details['hash_rate'])
         if cost:
             print(coin)
             print(details)
@@ -29,6 +30,7 @@ if __name__ == '__main__':
                 continue
 
             data['hour_cost'] = '${:,.0f}'.format(cost * listings['BTC']['price'] / 24.0)
+            data['nh_hash_percentage'] = '{:,.0f}%'.format(nh_hash_percentage * 100.0)
             data['market_cap'] = '${:,.0f}'.format(listing['market_cap']) if listing['market_cap'] else None
             data['rank'] = listing['rank']
             data['cmc_slug'] = listing['website_slug']

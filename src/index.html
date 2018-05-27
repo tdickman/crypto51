@@ -45,6 +45,7 @@
             <th scope="col">Algorithm</th>
             <th scope="col">Hash Rate</th>
             <th scope="col">1h Attack Cost</th>
+            <th scope="col">NiceHash-able</th>
           </tr>
         </thead>
         <tbody>
@@ -58,6 +59,7 @@
             <td>{{ coin.algorithm }}</td>
             <td>{{ coin.hash_rate_pretty }}</td>
             <td>{{ coin.hour_cost }}</td>
+            <td>{{ coin.nh_hash_percentage }}</td>
           </tr>
           {% endfor %}
         </tbody>
