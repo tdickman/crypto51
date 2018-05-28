@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 
 
-coin_blacklist = set(['XDN'])
+coin_blacklist = set(['XDN', 'PPC', 'DGB'])
 
 
 class MTC:
