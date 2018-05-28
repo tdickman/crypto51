@@ -65,7 +65,7 @@ if __name__ == '__main__':
             data['nicehash_price_btc'] = nh.get_algorithm_price(details['algorithm'])
             data['nicehash_price_usd_hour'] = '{:,.2f}'.format(data['nicehash_price_btc'] * btc_price / 24.0)
             data['hour_cost'] = '${:,.0f}'.format(cost * btc_price / 24.0)
-            data['nicehash_hash_percentage'] = '{:,.0f}%'.format(nh_hash_percentage * 100.0)
+            data['nicehash_hash_percentage'] = nh_hash_percentage
             data['market_cap'] = get_pretty_money(listing['market_cap']) if listing['market_cap'] else '-'
             data['rank'] = listing['rank']
             data['cmc_slug'] = listing['website_slug']

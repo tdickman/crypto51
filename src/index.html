@@ -61,8 +61,8 @@
             <td>{{ coin.market_cap }}</td>
             <td>{{ coin.algorithm }}</td>
             <td>{{ coin.hash_rate_pretty }}</td>
-            <td>{{ coin.hour_cost }}</td>
-            <td>{{ coin.nicehash_hash_percentage }}</td>
+            <td{% if coin.nicehash_hash_percentage < 1 %} title="Attack cost based on NiceHash having enough capacity for attack" class="text-muted"><em>{% else %}>{% endif %}{{ coin.hour_cost | string }}</em></td>
+            <td>{{ '{:,.0f}%'.format(coin.nicehash_hash_percentage * 100.0) }}</td>
           </tr>
           {% endfor %}
         </tbody>
