@@ -29,29 +29,29 @@
     </div>
 
     <div class="container">
-      <h2>What is the Purpose of this Site?</h2>
+      <h2>What is the purpose of this site?</h2>
       <p>This website is intended to bring light to the risk of 51% attacks on
       smaller cryptocurrencies. It is not intended to encourage or help in
       completing an attack, but instead to get people talking about the
-      problem, and potential solutions.</p>
-      <h2>What is a 51% Attack?</h2>
-      <p>In Proof of Work (PoW) cryptocurrencies, nodes typically are setup to
+      problem and potential solutions.</p>
+      <h2>What is a 51% attack?</h2>
+      <p>In Proof of Work (PoW) cryptocurrencies, nodes typically are set up to
       recognize the blockchain with the most blocks (and therefore the most
-      hashing power) as the correct version of history. A miner with > 50% of
+      hashing power) as the correct version of history. Miners with > 50% of
       the network hashing power can take advantage of this by sending funds to
-      one address on the main chain, while sending the funds to another address
-      on a forked copy of the blockchain that they are silently mining with
-      more hashing power than the main chain.</p>
+      one address on the main chain, while sending the same funds to another
+      address on a forked copy of the blockchain that they are silently mining
+      with more hashing power than the main chain.</p>
       <p>Since other nodes only know about the main chain, they will see the
       first transaction as valid, and exchanges, etc will accept this
       transaction as valid. This malicious node can later release these
       silently mined blocks, and other nodes will accept this as the new
       'correct chain' since it is longer. This will cause the original
       transaction to effectively dissappear, and nodes will recognize the funds
-      as getting sent to the address from the new chain instead. This is known
-      as a 'double spend' attack.</p>
+      as being sent to the address from the new chain instead. This is known as
+      a 'double spend' attack.</p>
       <p>Most bigger cryptocurrencies have sufficient mining capacity behind
-      them, so this would be extremely expensive to acquire the necessary
+      them, making it extremely expensive to acquire the necessary
       hardware to pull an attack like this off. Smaller cryptocurrencies have
       less hashing power securing the network, making it possible to simply
       rent hashing power from miners on a service like <a href="#">Nicehash</a>
@@ -62,16 +62,16 @@
                                                           href="https://qz.com/1287701/bitcoin-golds-51-attack-is-every-cryptocurrencys-nightmare-scenario/">high
                                                           profile attack</a>
       against Bitcoin Gold a few days ago where $18 Million was stolen.</p>
-      <h2>How is the Attack Cost Calculated?</h2>
+      <h2>How is the attack cost calculated?</h2>
       <p>Using the prices NiceHash lists for different algorithms we are able
       to calculate how much it would cost to rent enough hashing power to match
       the current network hashing power for an hour. Nicehash does not have
-      enough hashing power for most larger coins, so we also calculate what
+      enough hashing power for most larger coins, so we also calculated what
       percentage of the needed hashing power is available from Nicehash.</p>
       <p>Note that the attack cost does not include the block rewards that the
       miner will receive for mining. In some cases this can be quite
       significant, and reduce the attack cost by up to 80%.</p>
-      <h2>Can we Reduce the Risk?</h2>
+      <h2>Can we reduce the risk?</h2>
       <p>There are a number of possible solutions to this problem:
       <ul>
         <li>PoS</li>
