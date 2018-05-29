@@ -1,9 +1,6 @@
 from requests_html import HTMLSession
 
 
-coin_blacklist = set(['XDN', 'PPC', 'DGB', 'KMD'])
-
-
 class MTC:
     def __init__(self):
         self._session = HTMLSession()
@@ -11,16 +8,12 @@ class MTC:
     def get_coins(self):
         resp = self._session.get('https://minethecoin.com')
         for match in resp.html.find('.mineable'):
-            # Certain coins have invalid hash rates or other values, so we skip them
             symbol = match.find('.coin-name', first=True).attrs['title'].split(' - ')[0]
-            if symbol in coin_blacklist:
-                continue
             yield {
                 'symbol': symbol,
                 'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
                 'link': match.find('.coin-name', first=True).attrs['href']
             }
-        return []
 
     def _get_h_hash_rate(self, text):
         """Convert the hash rate string to a h/s hash rate."""

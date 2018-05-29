@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ coin.name }} ({{ coin.symbol }})| 51Crypto </title>
+    <title>Cost of a 51% Attack for Different Cryptocurrencies | 51Crypto </title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -34,50 +34,51 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">{{ coin.name }} ({{ coin.symbol}})</h1>
-      <p class="lead">Cost for a 51% attack</p>
+      <h1 class="display-4">PoW 51% Attack Cost</h1>
+      <p class="lead">This is a collection of coins and the theoretical cost of a 51% attack on each network.</p>
+      <a href="/about.html" role="button" class="btn btn-primary">Learn More</a>
     </div>
 
     <div class="container">
       <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">Algorithm</th>
+            <th scope="col">Hash Rate</th>
+            <th scope="col">1h Attack Cost</th>
+            <th scope="col">NiceHash-able</th>
+          </tr>
+        </thead>
         <tbody>
+          {% for coin in api_data.coins %}
           <tr>
-            <td>Market cap</td>
-            <td>{{ coin.market_cap }}</td>
-          </tr>
-          <tr>
-            <td>Mining algorithm</td>
+            <!-- <td><a href="{{ coin.cmc_link }}"><i class="cc {{coin.symbol }}"></i> {{ coin.name }}</a></td> -->
+            <td><a href="coins/{{ coin.symbol }}.html">{{ coin.name }}</a></td>
+            <td>{{ coin.symbol }}</td>
+            <td>{{ coin.market_cap_pretty }}</td>
             <td>{{ coin.algorithm }}</td>
-          </tr>
-          <tr>
-            <td>Network hash rate</td>
             <td>{{ coin.hash_rate_pretty }}</td>
+            {% if coin.network_vs_rentable_ratio < 1 %}
+              <td
+                title="Attack cost based on NiceHash having enough capacity for attack"
+                class="text-muted">
+                <em>${{ coin.rentable_price_usd_hour }}</em>
+              </td>
+            {% else %}
+              <td>${{ coin.rentable_price_usd_hour }}</td>
+            {% endif %}
+            <td>{{ '{:,.0f}%'.format(coin.network_vs_rentable_ratio * 100.0) }}</td>
           </tr>
-          <tr>
-            <td>Nicehash cost</td>
-            <td><a target="_blank" href="https://www.nicehash.com/marketplace/{{ coin.nicehash_algorithm_name }}">{{ coin.nicehash_price_btc }} BTC / {{ coin.nicehash_units }} / day</a></td>
-          </tr>
-          <tr>
-            <td>Nicehash cost / hr</td>
-            <td>${{ coin.nicehash_price_usd_hour }} / {{ coin.nicehash_units }} / hour</td>
-          </tr>
-          <tr>
-            <td>Estimated cost of 1 hour 51% attack</td>
-            <td{% if coin.nicehash_hash_percentage < 1 %} title="Attack cost based on NiceHash having enough capacity for attack" class="text-muted"><em>{% else %}>{% endif %}{{ coin.hour_cost | string }}</em></td>
-          </tr>
-          <tr>
-            <td>Nicehash capacity</td>
-            <td>{{ coin.nicehash_capacity }}</td>
-          </tr>
-          <tr>
-            <td>Nicehash percentage of network</td>
-            <td>{{ '{:,.0f}%'.format(coin.nicehash_hash_percentage * 100.0) }}</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
       <footer class="pt-4 my-md-5 pt-md-5">
       </footer>
     </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
