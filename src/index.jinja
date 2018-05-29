@@ -65,10 +65,10 @@
               <td
                 title="Attack cost based on NiceHash having enough capacity for attack"
                 class="text-muted">
-                <em>${{ coin.rentable_price_usd_hour }}</em>
+                <em>{{ coin.attack_hourly_cost_pretty }}</em>
               </td>
             {% else %}
-              <td>${{ coin.rentable_price_usd_hour }}</td>
+              <td>{{ coin.attack_hourly_cost_pretty }}</td>
             {% endif %}
             <td>{{ '{:,.0f}%'.format(coin.network_vs_rentable_ratio * 100.0) }}</td>
           </tr>

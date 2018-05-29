@@ -57,17 +57,17 @@ if __name__ == '__main__':
             'rentable_capacity': rentable_capacity,
             'rentable_capacity_pretty': common.get_pretty_hash_rate(rentable_capacity),
             'nicehash_market_link': 'https://www.nicehash.com/marketplace/{}'.format(nh.get_algorithm_name(mining_details['algorithm'])),
-            'hour_cost': cost * btc_price / 24.0,
-            'hour_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0),
+            'attack_hourly_cost': cost * btc_price / 24.0,
+            'attack_hourly_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0),
             'network_vs_rentable_ratio': nh_hash_ratio,
             'rentable_price_btc': rentable_price_btc,
-            'rentable_price_btc_units': nh.get_units(mining_details['algorithm']),
-            'rentable_price_usd_hour': '{:,.2f}'.format(rentable_price_btc * btc_price / 24.0)
+            'rentable_price_units': nh.get_units(mining_details['algorithm']),
+            'rentable_price_usd_hour': '${:,.2f}'.format(rentable_price_btc * btc_price / 24.0)
         })
 
     # Sort by rank
     results = {
-        'last_updated': datetime.datetime.utcnow(),
+        'last_updated': datetime.datetime.utcnow().isoformat(),
         'coins': sorted(coins, key=lambda k: k['coinmarketcap_rank'])
     }
 

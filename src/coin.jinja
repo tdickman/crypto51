@@ -55,11 +55,11 @@
           </tr>
           <tr>
             <td>Nicehash cost</td>
-            <td><a target="_blank" href="{{ coin.nicehash_market_link }}">{{ coin.rentable_price_btc }} BTC / {{ coin.rentable_price_btc_units }} / day</a></td>
+            <td><a target="_blank" href="{{ coin.nicehash_market_link }}">{{ coin.rentable_price_btc }} BTC / {{ coin.rentable_price_units }} / day</a></td>
           </tr>
           <tr>
             <td>Nicehash cost / hr</td>
-            <td>${{ coin.hour_cost }} / {{ coin.rentable_price_btc_units }} / hour</td>
+            <td>{{ coin.rentable_price_usd_hour }} / {{ coin.rentable_price_units }} / hour</td>
           </tr>
           <tr>
             <td>Estimated cost of 1 hour 51% attack</td>
@@ -67,19 +67,19 @@
               <td
                 title="Attack cost based on NiceHash having enough capacity for attack"
                 class="text-muted">
-                <em>{{ coin.rentable_price_usd_hour }}</em>
+                <em>{{ coin.attack_hourly_cost_pretty }}</em>
               </td>
             {% else %}
-                <td>{{ coin.rentable_price_usd_hour }}</td>
+                <td>{{ coin.attack_hourly_cost_pretty }}</td>
             {% endif %}
           </tr>
           <tr>
             <td>Nicehash capacity</td>
-            <td>{{ coin.nicehash_capacity }}</td>
+            <td>{{ coin.rentable_capacity_pretty }}</td>
           </tr>
           <tr>
             <td>Nicehash percentage of network</td>
-            <td>{{ '{:,.0f}%'.format(coin.nicehash_hash_percentage * 100.0) }}</td>
+            <td>{{ '{:,.0f}%'.format(coin.network_vs_rentable_ratio * 100.0) }}</td>
           </tr>
         </tbody>
       </table>

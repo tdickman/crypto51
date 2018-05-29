@@ -124,7 +124,7 @@ class NiceHash:
     def get_algorithm_price(self, algorithm):
         """Get the hashing cost (BTC) + units.
 
-        Value is returned in BTC/H/DAY.
+        Value is returned in BTC/UNITS/DAY.
         """
         index = self._get_algorithm_index(algorithm)
         if index is None:
