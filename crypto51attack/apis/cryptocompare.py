@@ -2,6 +2,7 @@ import requests
 
 
 class CryptoCompare:
+    """NOTE: This interface is a WIP and is currently not used by this project."""
     def get_all_coins(self):
         resp = requests.get('https://min-api.cryptocompare.com/data/all/coinlist')
         return resp.json()
@@ -35,8 +36,3 @@ class CryptoCompare:
             yield {
 
             }
-
-
-if __name__ == '__main__':
-    cc = CryptoCompare()
-    cc.get_all_coins_detailed()
