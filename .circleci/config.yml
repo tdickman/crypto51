@@ -6,15 +6,14 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:18.05.0-ce-git
+      - image: google/cloud-sdk:latest
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Install dependencies
           command: |
-            echo "Install any dependencies that we need for building the container here"
-            curl -sSL https://sdk.cloud.google.com | bash
+            echo "Install any dependencies that we need for building the container here - we should make a master docker container with all of this in it instead of installing it each time"
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
@@ -39,8 +38,8 @@ jobs:
           paths:
             - /caches/app.tar
       - run:
-        name: Store Service Account
-        command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+          name: Store Service Account
+          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - deploy:
           name: Push application Docker image
           command: |
