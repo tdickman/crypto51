@@ -1,5 +1,6 @@
 FROM    python:3.6-alpine
 
+RUN     apk add --update g++ gcc libxslt-dev && rm -rf /var/cache/apk/*
 RUN     pip install pipenv
 
 ADD     Pipfile /tmp
