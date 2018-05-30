@@ -14,6 +14,7 @@ jobs:
           name: Install dependencies
           command: |
             echo "Install any dependencies that we need for building the container here"
+            curl -sSL https://sdk.cloud.google.com | bash
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
@@ -37,16 +38,18 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-      # - run:
-      #   name: Store Service Account
-      #   command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-      # - deploy:
-      #     name: Push application Docker image
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      #         gcloud --qui
-      #         login="$(aws ecr get-login)"
-      #         ${login}
-      #         docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-      #         docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-      #       fi
+      - run:
+        name: Store Service Account
+        command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - deploy:
+          name: Push application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+              gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+              gcloud config set compute/zone us-central1-a
+              gcloud config set project hello-world-392
+              gcloud config set container/use_client_certificate True
+              gcloud container clusters get-credentials main
+              docker tag crypto51 "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
+              gcloud docker -- push "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
+            fi
