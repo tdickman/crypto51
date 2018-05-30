@@ -47,8 +47,8 @@ jobs:
               gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
               gcloud config set compute/zone us-central1-a
               gcloud config set project hello-world-392
-              gcloud config set container/use_client_certificate True
-              gcloud container clusters get-credentials main
+              # gcloud config set container/use_client_certificate True
+              # gcloud container clusters get-credentials main
               docker tag crypto51 "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
               gcloud docker -- push "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
             fi
