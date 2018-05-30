@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            echo "install any dependencies that we need for building the container here"
+            echo "Install any dependencies that we need for building the container here"
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
