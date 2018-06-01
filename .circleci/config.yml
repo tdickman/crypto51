@@ -36,17 +36,16 @@ jobs:
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-      - build:
+      - run:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
-              curl -O skaffold https://transfer.sh/MiyDk/skaffold
+              curl -o skaffold https://transfer.sh/MiyDk/skaffold
               chmod +x skaffold
               gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
               gcloud auth configure-docker
               gcloud config set compute/zone us-central1-a
               gcloud config set project hello-world-392
-              gcloud config set container/use_client_certificate True
               gcloud container clusters get-credentials main
               ./skaffold build -p gcb
             fi
