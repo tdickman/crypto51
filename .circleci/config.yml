@@ -9,47 +9,50 @@ jobs:
       - image: google/cloud-sdk:latest
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            echo "Install any dependencies that we need for building the container here - we should make a master docker container with all of this in it instead of installing it each time"
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build --cache-from=app -t crypto51 .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar crypto51
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+      # - setup_remote_docker
+      # - restore_cache:
+      #     keys:
+      #       - v1-{{ .Branch }}
+      #     paths:
+      #       - /caches/app.tar
+      # - run:
+      #     name: Load Docker image layer cache
+      #     command: |
+      #       set +o pipefail
+      #       docker load -i /caches/app.tar | true
+      # - run:
+      #     name: Build application Docker image
+      #     command: |
+      #       docker build --cache-from=app -t crypto51 .
+      # - run:
+      #     name: Save Docker image layer cache
+      #     command: |
+      #       mkdir -p /caches
+      #       docker save -o /caches/app.tar crypto51
+      # - save_cache:
+      #     key: v1-{{ .Branch }}-{{ epoch }}
+      #     paths:
+      #       - /caches/app.tar
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-      - deploy:
+      - build:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+              curl -O skaffold https://transfer.sh/MiyDk/skaffold
+              chmod +x skaffold
               gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
               gcloud auth configure-docker
               gcloud config set compute/zone us-central1-a
               gcloud config set project hello-world-392
-              # gcloud config set container/use_client_certificate True
-              # gcloud container clusters get-credentials main
-              docker tag crypto51 "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
-              docker push "gcr.io/hello-world-392/crypto51:${CIRCLE_SHA1}"
+              gcloud config set container/use_client_certificate True
+              gcloud container clusters get-credentials main
+              ./skaffold build -p gcb
+            fi
+      - deploy:
+          name: Deploy image to GCloud
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+              ./skaffold deploy -p gcb
             fi

@@ -1,3 +1,4 @@
 results.json
 dist/
 .env
+*.swp

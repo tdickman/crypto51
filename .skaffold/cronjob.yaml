@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: crypto51
+spec:
+  schedule: "27 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: google-cloud-key
+            secret:
+              secretName: crypto51-gcloud-key
+          containers:
+          - name: crypto51
+            image: gcr.io/hello-world-392/crypto51
+            volumeMounts:
+            - name: google-cloud-key
+              mountPath: /var/secrets/google
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/key.json
+          restartPolicy: OnFailure
+      backoffLimit: 4

@@ -1,14 +1,22 @@
-FROM    python:3.6-alpine
+FROM        ubuntu:18.04
 
-RUN     apk add --update g++ gcc libxslt-dev && rm -rf /var/cache/apk/*
-RUN     pip install pipenv
+ENV         PYTHONPATH=/app
 
-ADD     Pipfile /tmp
-ADD     Pipfile.lock /tmp
+RUN         apt update && apt install -y curl gnupg && rm -rf /var/lib/apt/lists/*
+RUN         echo "deb http://packages.cloud.google.com/apt cloud-sdk-bionic main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN         curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
-RUN     cd /tmp && pipenv install --system
+RUN         apt update && apt install -y google-cloud-sdk python3.6 python2.7 python3-pip g++ gcc libxslt-dev libffi-dev && rm -rf /var/lib/apt/lists/*
+RUN         pip3 install pipenv
 
-WORKDIR /app
-COPY    . /app
+ENV         LC_ALL=C.UTF-8
+ENV         LANG=C.UTF-8
+ADD         Pipfile /tmp
+ADD         Pipfile.lock /tmp
 
-CMD     ["./update.sh", "noprompt"]
+RUN         cd /tmp && pipenv install --system --python 3.6
+
+WORKDIR     /app
+COPY        . /app
+
+CMD         ["/bin/bash", "-c", "gcloud auth activate-service-account --key-file /var/secrets/google/key.json && ./update.sh noprompt"]
