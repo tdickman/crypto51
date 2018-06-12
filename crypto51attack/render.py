@@ -2,14 +2,19 @@ import json
 from jinja2 import Template
 
 
-def render(api_data):
-    with open('src/style.css', 'r') as f:
-        with open('dist/style.css', 'w') as g:
+def copy(name):
+    """Copy the specified file from src to dist."""
+    with open('src/{}'.format(name), 'r') as f:
+        with open('dist/{}'.format(name), 'w') as g:
             g.write(f.read())
 
-    with open('src/about.jinja', 'r') as f:
-        with open('dist/about.html', 'w') as g:
-            g.write(f.read())
+
+def render(api_data):
+    copy('style.css')
+    copy('lightningTip.js')
+    copy('lightningTip.css')
+    copy('about.html')
+    copy('donate.html')
 
     with open('src/index.jinja', 'r') as f:
         template = Template(f.read())
