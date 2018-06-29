@@ -2,3 +2,4 @@ results.json
 dist/
 .env
 *.swp
+__pycache__/
