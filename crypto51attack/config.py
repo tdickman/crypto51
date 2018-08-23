@@ -1,1 +1,1 @@
-coin_blacklist = set(['XDN', 'PPC', 'DGB', 'KMD', 'DCY', 'DP'])
+coin_blacklist = set(['XDN', 'PPC', 'DGB', 'KMD', 'DCY', 'DP', 'NLG'])
