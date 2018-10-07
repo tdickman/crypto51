@@ -11,8 +11,6 @@ def copy(name):
 
 def render(api_data):
     copy('style.css')
-    copy('lightningTip.js')
-    copy('lightningTip.css')
     copy('about.html')
     copy('donate.html')
 
