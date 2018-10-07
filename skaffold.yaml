@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1alpha2
+apiVersion: skaffold/v1alpha3
 kind: Config
 build:
   artifacts:
@@ -6,9 +6,9 @@ build:
 deploy:
   kubectl:
     manifests:
-      - .skaffold/*.yaml
+    - .skaffold/*.yaml
 profiles:
-  - name: gcb
-    build:
-      googleCloudBuild:
-        projectId: hello-world-392
+- name: gcb
+  build:
+    googleCloudBuild:
+      projectId: hello-world-392
