@@ -6,7 +6,8 @@ name = "pypi"
 [packages]
 requests-html = "*"
 requests = "*"
-"jinja2" = "*"
+jinja2 = "*"
+pytz = "*"
 
 [dev-packages]
 pytest = "*"

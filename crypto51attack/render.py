@@ -1,4 +1,6 @@
+import datetime
 import json
+import pytz
 from jinja2 import Template
 
 
@@ -17,7 +19,9 @@ def render(api_data):
     with open('src/index.jinja', 'r') as f:
         template = Template(f.read())
         with open('dist/index.html', 'w') as g:
-            g.write(template.render(api_data=api_data))
+            tz = pytz.timezone('US/Eastern')
+            now = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
+            g.write(template.render(api_data=api_data, last_updated=now))
 
     with open('src/coin.jinja', 'r') as f:
         template = Template(f.read())
