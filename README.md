@@ -14,7 +14,8 @@ python app.py
 python render.py
 ```
 
-Alternatively you can run the following to generate updated html files + copy them to Google Cloud
+Alternatively you can run the following to generate updated html files + copy
+them to Google Cloud
 
 ```
 pipenv --python 3.6 shell

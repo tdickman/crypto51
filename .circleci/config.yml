@@ -9,37 +9,13 @@ jobs:
       - image: google/cloud-sdk:latest
     steps:
       - checkout
-      # - setup_remote_docker
-      # - restore_cache:
-      #     keys:
-      #       - v1-{{ .Branch }}
-      #     paths:
-      #       - /caches/app.tar
-      # - run:
-      #     name: Load Docker image layer cache
-      #     command: |
-      #       set +o pipefail
-      #       docker load -i /caches/app.tar | true
-      # - run:
-      #     name: Build application Docker image
-      #     command: |
-      #       docker build --cache-from=app -t crypto51 .
-      # - run:
-      #     name: Save Docker image layer cache
-      #     command: |
-      #       mkdir -p /caches
-      #       docker save -o /caches/app.tar crypto51
-      # - save_cache:
-      #     key: v1-{{ .Branch }}-{{ epoch }}
-      #     paths:
-      #       - /caches/app.tar
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run:
           name: Push application Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               curl -o skaffold https://transfer.sh/MiyDk/skaffold
               chmod +x skaffold
               gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
@@ -52,6 +28,6 @@ jobs:
       - deploy:
           name: Deploy image to GCloud
           command: |
-            if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./skaffold deploy -p gcb
             fi
