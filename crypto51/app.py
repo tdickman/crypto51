@@ -1,11 +1,11 @@
 import datetime
 import json
 
-from crypto51attack.apis.mtc import MTC
-from crypto51attack.apis.nicehash import NiceHash
-from crypto51attack.apis.cmc import CMC
-from crypto51attack.libs import common
-from crypto51attack import config
+from crypto51.apis.mtc import MTC
+from crypto51.apis.nicehash import NiceHash
+from crypto51.apis.cmc import CMC
+from crypto51.libs import common
+from crypto51 import config
 
 
 if __name__ == '__main__':

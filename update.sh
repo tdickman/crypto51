@@ -2,8 +2,8 @@
 rm -rf dist/
 mkdir dist/
 mkdir dist/coins/
-python3 crypto51attack/app.py
-python3 crypto51attack/render.py
+python3 crypto51/app.py
+python3 crypto51/render.py
 if [ "$1" != "noprompt" ]; then
     read -p "Please check the output and then press [ENTER] to continue"
 fi

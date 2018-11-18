@@ -1,4 +1,4 @@
-from crypto51attack.libs.mtc import MTC
+from crypto51.libs.mtc import MTC
 
 
 def test_get_gh_hash_rate():
