@@ -2,7 +2,7 @@ apiVersion: skaffold/v1alpha5
 kind: Config
 build:
   artifacts:
-  - imageName: gcr.io/hello-world-392/crypto51
+  - image: gcr.io/hello-world-392/crypto51
 deploy:
   kubectl:
     manifests:
