@@ -3,7 +3,7 @@
 # containers to the docker registry, and to deploy to k8s.
 version: 2
 jobs:
-  build:
+  build_deploy:
     working_directory: /app
     docker:
       - image: google/cloud-sdk:latest
@@ -15,19 +15,23 @@ jobs:
       - run:
           name: Push application Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-              chmod +x skaffold
-              gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-              gcloud auth configure-docker --quiet
-              gcloud config set compute/zone us-central1-a
-              gcloud config set project hello-world-392
-              gcloud container clusters get-credentials main
-              ./skaffold build -p gcb
-            fi
+            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+            chmod +x skaffold
+            gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            gcloud auth configure-docker --quiet
+            gcloud config set compute/zone us-central1-a
+            gcloud config set project hello-world-392
+            gcloud container clusters get-credentials main
+            ./skaffold build -p gcb
       - deploy:
           name: Deploy image to GCloud
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./skaffold deploy -p gcb
-            fi
+          command: ./skaffold deploy -p gcb
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build_deploy:
+          filters:
+            branches:
+              only:
+               - master
