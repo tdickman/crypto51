@@ -23,10 +23,7 @@ jobs:
             gcloud config set compute/zone us-central1-a
             gcloud config set project hello-world-392
             gcloud container clusters get-credentials main
-            ./skaffold build -p gcb
-      - deploy:
-          name: Deploy image to GCloud
-          command: ./skaffold deploy -p gcb
+            ./skaffold run -p gcb
 workflows:
   version: 2
   build-test-deploy:
