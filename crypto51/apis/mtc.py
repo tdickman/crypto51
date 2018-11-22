@@ -31,6 +31,12 @@ class MTC:
 
     def get_details(self, link):
         resp = self._session.get(link)
+        if resp.status_code not in [200, 201]:
+            return {
+                'market_cap': '0',
+                'hash_rate': '0',
+                'algorithm': 'error'
+            }
         html = resp.html
         hash_rate_pretty = html.find('.stats tr')[2].find('td', first=True).text
         hash_rate = self._get_h_hash_rate(hash_rate_pretty)
