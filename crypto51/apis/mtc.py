@@ -6,14 +6,18 @@ class MTC:
         self._session = HTMLSession()
 
     def get_coins(self):
-        resp = self._session.get('https://minethecoin.com')
-        for match in resp.html.find('.mineable'):
-            symbol = match.find('.coin-name', first=True).attrs['title'].split(' - ')[0]
-            yield {
-                'symbol': symbol,
-                'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
-                'link': match.find('.coin-name', first=True).attrs['href']
-            }
+        page = 1
+        while page:
+            resp = self._session.get('https://minethecoin.com?page={}'.format(page))
+            for match in resp.html.find('.mineable'):
+                symbol = match.find('.coin-name', first=True).attrs['title'].split(' - ')[0]
+                yield {
+                    'symbol': symbol,
+                    'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
+                    'link': match.find('.coin-name', first=True).attrs['href']
+                }
+            # Check if another page exists
+            page = None if 'disabled' in resp.html.find('.pagination', first=True).find('.page-item')[-1].attrs['class'] else page + 1
 
     def _get_h_hash_rate(self, text):
         """Convert the hash rate string to a h/s hash rate."""
