@@ -16,8 +16,16 @@ class MTC:
                     'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
                     'link': match.find('.coin-name', first=True).attrs['href']
                 }
-            # Check if another page exists
-            page = None if 'disabled' in resp.html.find('.pagination', first=True).find('.page-item')[-1].attrs['class'] else page + 1
+            page = self._get_next_page(resp.html.find('.pagination', first=True), page)
+
+    def _get_next_page(self, pagination_el, current_page):
+        """Return the next page if it exists, otherwise return None."""
+        next_page_a = pagination_el.find('.page-item')[-1].find('a', first=True)
+        if not next_page_a:
+            return None
+        next_page = int(next_page_a.attrs['href'].split('?page=')[-1])
+        assert next_page == current_page + 1
+        return next_page
 
     def _get_h_hash_rate(self, text):
         """Convert the hash rate string to a h/s hash rate."""
