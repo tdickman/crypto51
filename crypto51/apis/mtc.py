@@ -6,14 +6,26 @@ class MTC:
         self._session = HTMLSession()
 
     def get_coins(self):
-        resp = self._session.get('https://minethecoin.com')
-        for match in resp.html.find('.mineable'):
-            symbol = match.find('.coin-name', first=True).attrs['title'].split(' - ')[0]
-            yield {
-                'symbol': symbol,
-                'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
-                'link': match.find('.coin-name', first=True).attrs['href']
-            }
+        page = 1
+        while page:
+            resp = self._session.get('https://minethecoin.com?page={}'.format(page))
+            for match in resp.html.find('.mineable'):
+                symbol = match.find('.coin-name', first=True).attrs['title'].split(' - ')[0]
+                yield {
+                    'symbol': symbol,
+                    'name': match.find('.coin-name', first=True).attrs['title'].split(' - ')[1],
+                    'link': match.find('.coin-name', first=True).attrs['href']
+                }
+            page = self._get_next_page(resp.html.find('.pagination', first=True), page)
+
+    def _get_next_page(self, pagination_el, current_page):
+        """Return the next page if it exists, otherwise return None."""
+        next_page_a = pagination_el.find('.page-item')[-1].find('a', first=True)
+        if not next_page_a:
+            return None
+        next_page = int(next_page_a.attrs['href'].split('?page=')[-1])
+        assert next_page == current_page + 1
+        return next_page
 
     def _get_h_hash_rate(self, text):
         """Convert the hash rate string to a h/s hash rate."""
