@@ -1,42 +1,10 @@
 import requests
 
 
-algorithms = [
-    'scrypt',
-    'sha256',
-    'scryptnf',
-    'x11',
-    'x13',
-    'keccak',
-    'x15',
-    'nist5',
-    'neoscrypt',
-    'lyra2re',
-    'whirlpoolx',
-    'qubit',
-    'quark',
-    'axiom',
-    'lyra2rev2',
-    'scryptjanenf16',
-    'blake256r8',
-    'blake256r14',
-    'blake256r8vnl',
-    'hodl',
-    'daggerhashimoto',
-    'decred',
-    'cryptonight',
-    'lbry',
-    'equihash',
-    'pascal',
-    'x11gost',
-    'sia',
-    'blake2s',
-    'skunk',
-    'cryptonightv7'
-]
-
+# Nicehash name on left, mtc on right
 remap_algorithms = {
-    'ethash': 'daggerhashimoto'
+    'daggerhashimoto': 'ethash',
+    'sha256asicboost': 'sha256'
 }
 
 
@@ -50,6 +18,16 @@ class NiceHash:
         # self._session.headers.update({'Cookie': os.env['NICEHASH_COOKIE']})
         self._buy_info = requests.get('https://api.nicehash.com/api?method=buy.info').json()
         self._global_stats = requests.get('https://api.nicehash.com/api?method=stats.global.current').json()
+        self._algo_ids = self._get_algo_ids()
+
+    def _get_algo_ids(self):
+        algorithms = requests.get('https://api.nicehash.com/api?method=multialgo.info').json()['result']['multialgo']
+        algo_ids = {}
+        for a in algorithms:
+            name = a['name'].lower()
+            name = remap_algorithms.get(name, name)
+            algo_ids[name] = a['algo']
+        return algo_ids
 
     def get_cost(self, algorithm, amount):
         """Calculate the cost / hr to obtain the required hash rate with fixed contracts.
@@ -114,12 +92,7 @@ class NiceHash:
 
     def _get_algorithm_index(self, algorithm):
         algorithm = self.get_algorithm_name(algorithm)
-        algorithm = remap_algorithms.get(algorithm, algorithm)
-        try:
-            index = algorithms.index(algorithm)
-        except ValueError:
-            return None
-        return index
+        return self._algo_ids.get(algorithm)
 
     def get_algorithm_price(self, algorithm):
         """Get the hashing cost (BTC) + units.
