@@ -56,7 +56,7 @@
           {% for coin in api_data.coins %}
           <tr>
             <!-- <td><a href="{{ coin.cmc_link }}"><i class="cc {{coin.symbol }}"></i> {{ coin.name }}</a></td> -->
-            <td><a href="coins/{{ coin.symbol }}.html">{{ coin.name }}</a></td>
+            <td class="coin-name"><a href="coins/{{ coin.symbol }}.html">{{ coin.name }}</a></td>
             <td>{{ coin.symbol }}</td>
             <td>{{ coin.market_cap_pretty }}</td>
             <td>{{ coin.algorithm }}</td>
