@@ -28,3 +28,4 @@ html {
 #lightningTip { margin: 0 auto; }
 .thank-you { margin: 0 auto; padding-top: 1em; }
 .lightningLabel { font-size: 15px; padding-top: 20px; margin-bottom: 8px; }
+.coin-name { max-width: 195px; }
