@@ -25,7 +25,7 @@ if __name__ == '__main__':
         nh_hash_ratio = nh.get_hash_percentage(mining_details['algorithm'], mining_details['hash_rate'])
 
         # Skip coins that NiceHash doesn't support
-        if not cost:
+        if cost is None:
             continue
 
         # Skip anything not in cmc for now
@@ -57,8 +57,8 @@ if __name__ == '__main__':
             'rentable_capacity': rentable_capacity,
             'rentable_capacity_pretty': common.get_pretty_hash_rate(rentable_capacity),
             'nicehash_market_link': 'https://www.nicehash.com/marketplace/{}'.format(nh.get_algorithm_name(mining_details['algorithm'])),
-            'attack_hourly_cost': cost * btc_price / 24.0,
-            'attack_hourly_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0),
+            'attack_hourly_cost': cost * btc_price / 24.0 if cost != 0 else '?',
+            'attack_hourly_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0) if cost != 0 else '?',
             'network_vs_rentable_ratio': nh_hash_ratio,
             'rentable_price_btc': rentable_price_btc,
             'rentable_price_units': nh.get_units(mining_details['algorithm']),
