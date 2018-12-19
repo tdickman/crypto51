@@ -25,6 +25,18 @@
   </head>
 
   <body>
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body" style="margin:auto; margin-top:35px;">
+            <iframe id="tipModalIframe" scrolling="no" style="border: none; width: 350px; height: 530px;"></iframe>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
       <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">Crypto51</a></h5>
@@ -37,6 +49,9 @@
       <h1 class="display-4">PoW 51% Attack Cost</h1>
       <p class="lead">This is a collection of coins and the theoretical cost of a 51% attack on each network.</p>
       <a href="/about.html" role="button" class="btn btn-primary">Learn More</a>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tipModal">
+        ⚡️ Tip
+      </button>
     </div>
 
     <div class="container">
@@ -85,5 +100,14 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      $('#tipModal').on('show.bs.modal', function(){
+        let modal = $('#tipModalIframe');
+        if (modal.attr('src') == undefined) {
+          $('#tipModalIframe').attr('src', 'https://tippin.me/buttons/send-lite.php?u=xur17');
+        }
+      });
+    </script>
   </body>
 </html>
