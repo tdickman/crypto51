@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 rm -rf dist/
 mkdir dist/
 mkdir dist/coins/
