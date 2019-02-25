@@ -1,7 +1,7 @@
 import requests
 
 
-# Nicehash name on left, mtc on right
+# Nicehash name on left, wtm on right
 remap_algorithms = {
     'daggerhashimoto': 'ethash',
     'sha256asicboost': 'sha256'
