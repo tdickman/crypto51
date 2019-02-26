@@ -12,8 +12,8 @@ if __name__ == '__main__':
     nh = NiceHash()
     wtm = WTM()
     coins = wtm.get_coin_data()
-    allcoins = [];
-    btc_price = requests.get('https://whattomine.com/coins/1.json').json()['exchange_rate'];
+    allcoins = []
+    btc_price = requests.get('https://whattomine.com/coins/1.json').json()['exchange_rate']
 
     # Iterate through coins on WTM that's not 'lagging'
     for coin in coins:

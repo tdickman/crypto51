@@ -35,7 +35,7 @@ class WTM:
                     "exchange_rate":wtmcoin["exchange_rate"],
                     "hashrate":wtmcoin["nethash"]
                 }
-                time.sleep(0.5)
+                time.sleep(1.2)
 
     def get_coin_data(self):
         return self._wtm
