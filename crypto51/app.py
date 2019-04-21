@@ -24,6 +24,7 @@ if __name__ == '__main__':
         coin_marketcap = coins[coin]['marketcap']
         coin_algorithm = coins[coin]['algorithm']
         coin_exchange_rate = coins[coin]['exchange_rate']
+        coin_block_time = coins[coin]['block_time']
 
         # Certain coins have invalid hash rates or other values, so we skip them
         if coin_symbol in config.coin_blacklist:
@@ -63,7 +64,8 @@ if __name__ == '__main__':
             'network_vs_rentable_ratio': nh_hash_ratio,
             'rentable_price_btc': rentable_price_btc,
             'rentable_price_units': nh.get_units(coin_algorithm),
-            'rentable_price_usd_hour': '${:,.2f}'.format(rentable_price_btc * btc_price / 24.0)
+            'rentable_price_usd_hour': '${:,.2f}'.format(rentable_price_btc * btc_price / 24.0),
+            'block_time': coin_block_time
         })
 
     # Sort by rank
