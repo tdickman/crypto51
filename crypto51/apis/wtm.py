@@ -33,7 +33,8 @@ class WTM:
                     "algorithm":wtm["coins"][coin]['algorithm'],
                     "marketcap":float(wtmcoin["market_cap"].replace("$", '').replace(',','')),
                     "exchange_rate":wtmcoin["exchange_rate"],
-                    "hashrate":wtmcoin["nethash"]
+                    "hashrate":wtmcoin["nethash"],
+                    "block_time":float(wtmcoin['block_time'])
                 }
                 time.sleep(1.2)
 
