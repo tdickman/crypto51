@@ -69,7 +69,7 @@ class NiceHash:
             return value / (1000.0 ** 3)
         elif units in ['MSol', 'MH']:
             return value / (1000.0 ** 2)
-        elif units == 'KH':
+        elif units in ['KH', 'kG', 'kSol']:
             return value / 1000.0
         raise Exception('Unknown units: {}'.format(units))
 
