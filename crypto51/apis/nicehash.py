@@ -16,11 +16,17 @@ class NiceHash:
     def __init__(self):
         self._session = requests.Session()
         # self._session.headers.update({'Cookie': os.env['NICEHASH_COOKIE']})
-        self._buy_info = requests.get('https://api2.nicehash.com/main/api/v2/public/buy/info').json()
-        _global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()
+        _buy_info = requests.get('https://api2.nicehash.com/main/api/v2/public/buy/info').json()['miningAlgorithms']
+        _global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()['algos']
+        """Set up global stats"""
         self._global_stats = {}
-        for stats in _global_stats['algos']:
-            self._global_stats[int(stats['a'])] = stats
+        for stats in _global_stats:
+            self._global_stats[stats['a']] = stats
+        """Set up buy info"""
+        self._buy_info = {}
+        for info in _buy_info:
+            self._buy_info[info['algo']] = info
+        """Set up algo ids"""
         self._algo_ids = self._get_algo_ids()
 
     def _get_algo_ids(self):
@@ -45,9 +51,6 @@ class NiceHash:
         amount = self._get_in_nicehash_units(algorithm, amount)
         day_cost_btc = 0.0
         for country in ['eu', 'us']:
-            """
-            https://www.nicehash.com/siteapi/market/{index}/{country}/fixed?limit={amount}
-            """
             resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': amount, 'market': country, 'algorithm': algorithm}).json()
             if resp['fixedPrice'] == 'Not enough hashing power available.':
                 max_fixed_price = float(resp['fixedMax']) - 0.01
