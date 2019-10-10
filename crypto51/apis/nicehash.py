@@ -137,7 +137,7 @@ class NiceHash:
         if index is None:
             return None
         # Convert from giga
-        nicehash_speed = float(self._global_stats[index]['s']) * (1000.0 ** 3)
+        nicehash_speed = float(self._global_stats[index]['s'])
         return nicehash_speed
 
     def get_hash_percentage(self, algorithm, hash_rate):
@@ -146,6 +146,6 @@ class NiceHash:
         if index is None:
             return None
         # Convert from giga
-        nicehash_speed = float(self._global_stats[index]['s']) * (1000.0 ** 3)
+        nicehash_speed = float(self._global_stats[index]['s'])
         print(algorithm, nicehash_speed, hash_rate)
         return nicehash_speed / hash_rate
