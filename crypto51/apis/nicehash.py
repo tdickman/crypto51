@@ -89,7 +89,7 @@ class NiceHash:
         I have no idea what does location=1 mean:
         https://api.nicehash.com/api?method=orders.get&location=1&algo={}
         """
-        resp = requests.get('https://api2.nicehash.com/main/api/v2/public/orders/?alghoritm={}'.format(index))
+        resp = requests.get('https://api2.nicehash.com/main/api/v2/public/orders/?algorithm={}'.format(index))
         return resp.json()['result']['orders']
 
     def get_algorithm_name(self, algorithm):
