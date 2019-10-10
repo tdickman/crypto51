@@ -20,7 +20,7 @@ class NiceHash:
         _global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()
         self._global_stats = {}
         for stats in _global_stats:
-            self._global_stats[stats.a] = stats
+            self._global_stats[stats['a']] = stats
         self._algo_ids = self._get_algo_ids()
 
     def _get_algo_ids(self):
@@ -48,10 +48,10 @@ class NiceHash:
             """
             https://www.nicehash.com/siteapi/market/{index}/{country}/fixed?limit={amount}
             """
-            resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': amount, 'market': country, 'alghoritm': alghoritm}).json()
+            resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': amount, 'market': country, 'algorithm': algorithm}).json()
             if resp['fixedPrice'] == 'Not enough hashing power available.':
                 max_fixed_price = float(resp['fixedMax']) - 0.01
-                resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': max_fixed_price, 'market': country, 'alghoritm': alghoritm}).json()
+                resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': max_fixed_price, 'market': country, 'algorithm': algorithm}).json()
                 if resp['fixedPrice'] == 'Not enough hashing power available.':
                     continue
                 day_cost_btc += float(resp['fixedPrice']) * max_fixed_price
