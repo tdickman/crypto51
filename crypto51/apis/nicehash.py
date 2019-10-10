@@ -19,17 +19,17 @@ class NiceHash:
         self._buy_info = requests.get('https://api2.nicehash.com/main/api/v2/public/buy/info').json()
         _global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()
         self._global_stats = {}
-        for stats in _global_stats:
-            self._global_stats[stats['a']] = stats
+        for stats in _global_stats['algos']:
+            self._global_stats[int(stats['a'])] = stats
         self._algo_ids = self._get_algo_ids()
 
     def _get_algo_ids(self):
-        algorithms = requests.get('https://api2.nicehash.com/main/api/v2/public/simplemultialgo/info/').json()['miningAlgorithms']
+        algorithms = requests.get('https://api2.nicehash.com/main/api/v2/mining/algorithms/').json()['miningAlgorithms']
         algo_ids = {}
-        for index, a in enumerate(algorithms):
+        for a in algorithms:
             name = a['algorithm'].lower()
             name = remap_algorithms.get(name, name)
-            algo_ids[name] = index
+            algo_ids[name] = a['order']
         return algo_ids
 
     def get_cost(self, algorithm, amount):
