@@ -115,7 +115,7 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        pricing = float(self._global_stats[index]['p']) * (10 ** 9)
+        pricing = float(self._global_stats[index]['p']) * (10 ** 7)
         return pricing
 
     def get_cost_global(self, algorithm, hash_rate):
@@ -123,8 +123,8 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        # Speed is in H/s and price is in BTC/H.
-        pricing = float(self._global_stats[index]['p'])
+        # Speed is in H/s and price is in BTC/100H.
+        pricing = float(self._global_stats[index]['p']) / 100
         print(algorithm, hash_rate, pricing, pricing * hash_rate)
         return pricing * hash_rate
 
