@@ -129,6 +129,7 @@ class NiceHash:
         # Convert hash rate to the units used by NiceHash.
         hash_rate = self._get_in_nicehash_units(algorithm, hash_rate)
         pricing = float(self._global_stats[index]['p'])
+        print(algorithm, hash_rate, pricing, pricing * hash_rate)
         return pricing * hash_rate
 
     def get_capacity(self, algorithm):
