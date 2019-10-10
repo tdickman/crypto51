@@ -69,7 +69,7 @@ class NiceHash:
     def _get_in_nicehash_units(self, algorithm, value):
         """Use the buy info endpoint to convert the given value from h/s to the specified units in nicehash."""
         index = self._get_algorithm_index(algorithm)
-        units = self._buy_info['miningAlgorithms'][index]['speed_text']
+        units = self._buy_info[index]['speed_text']
         if units == 'PH':
             return value / (1000.0 ** 5)
         elif units == 'TH':
@@ -84,7 +84,7 @@ class NiceHash:
 
     def get_units(self, algorithm):
         index = self._get_algorithm_index(algorithm)
-        units = self._buy_info['miningAlgorithms'][index]['speed_text']
+        units = self._buy_info[index]['speed_text']
         return units
 
     def get_orders(self, algorithm):
