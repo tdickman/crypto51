@@ -17,7 +17,10 @@ class NiceHash:
         self._session = requests.Session()
         # self._session.headers.update({'Cookie': os.env['NICEHASH_COOKIE']})
         self._buy_info = requests.get('https://api2.nicehash.com/main/api/v2/public/buy/info').json()
-        self._global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()
+        _global_stats = requests.get('https://api2.nicehash.com/main/api/v2/public/stats/global/current').json()
+        self._global_stats = {}
+        for stats in _global_stats:
+            self._global_stats[stats.a] = stats
         self._algo_ids = self._get_algo_ids()
 
     def _get_algo_ids(self):
@@ -109,7 +112,7 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        pricing = float(self._global_stats['algos'][index]['p'])
+        pricing = float(self._global_stats[index]['p'])
         return pricing
 
     def get_cost_global(self, algorithm, hash_rate):
@@ -122,7 +125,7 @@ class NiceHash:
             return None
         # Convert hash rate to the units used by NiceHash.
         hash_rate = self._get_in_nicehash_units(algorithm, hash_rate)
-        pricing = float(self._global_stats['algos'][index]['p'])
+        pricing = float(self._global_stats[index]['p'])
         return pricing * hash_rate
 
     def get_capacity(self, algorithm):
@@ -130,7 +133,7 @@ class NiceHash:
         if index is None:
             return None
         # Convert from giga
-        nicehash_speed = float(self._global_stats['algos'][index]['s']) * (1000.0 ** 3)
+        nicehash_speed = float(self._global_stats[index]['s']) * (1000.0 ** 3)
         return nicehash_speed
 
     def get_hash_percentage(self, algorithm, hash_rate):
@@ -139,6 +142,6 @@ class NiceHash:
         if index is None:
             return None
         # Convert from giga
-        nicehash_speed = float(self._global_stats['algos'][index]['s']) * (1000.0 ** 3)
+        nicehash_speed = float(self._global_stats[index]['s']) * (1000.0 ** 3)
         print(algorithm, nicehash_speed, hash_rate)
         return nicehash_speed / hash_rate
