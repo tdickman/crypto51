@@ -110,24 +110,20 @@ class NiceHash:
     def get_algorithm_price(self, algorithm):
         """Get the hashing cost (BTC) + units.
 
-        Value is returned in BTC/UNITS/DAY.
+        Value is returned in BTC/PH/DAY.
         """
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        pricing = float(self._global_stats[index]['p'])
+        pricing = float(self._global_stats[index]['p']) * (10 ** 9)
         return pricing
 
     def get_cost_global(self, algorithm, hash_rate):
-        """Return the global pricing for the specified algorithm.
-
-        Speed in gh/s, and price in btc per gh/s per day.
-        """
+        """Return the global pricing for the specified algorithm."""
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        # Convert hash rate to the units used by NiceHash.
-        hash_rate = self._get_in_nicehash_units(algorithm, hash_rate)
+        # Speed is in H/s and price is in BTC/H.
         pricing = float(self._global_stats[index]['p'])
         print(algorithm, hash_rate, pricing, pricing * hash_rate)
         return pricing * hash_rate
@@ -136,7 +132,7 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        # Convert from giga
+        # Speed is in H/s
         nicehash_speed = float(self._global_stats[index]['s'])
         return nicehash_speed
 
@@ -145,7 +141,7 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        # Convert from giga
+        # Speed is in H/s
         nicehash_speed = float(self._global_stats[index]['s'])
         print(algorithm, nicehash_speed, hash_rate)
         return nicehash_speed / hash_rate
