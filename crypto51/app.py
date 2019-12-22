@@ -33,7 +33,7 @@ if __name__ == '__main__':
         # Get mining details from WTM
         # Details are: hash_rate, algorithm
         cost = nh.get_cost_global(coin_algorithm, coin_hashrate)
-        nh_hash_ratio = nh.get_hash_percentage(coin_algorithm, coin_hashrate);
+        nh_hash_ratio = nh.get_hash_percentage(coin_algorithm, coin_hashrate)
 
         # Skip coins that NiceHash doesn't support
         if cost is None:
@@ -58,13 +58,11 @@ if __name__ == '__main__':
             'hash_rate_pretty': common.get_pretty_hash_rate(coin_hashrate),
             'rentable_capacity': rentable_capacity,
             'rentable_capacity_pretty': common.get_pretty_hash_rate(rentable_capacity),
-            'nicehash_market_link': 'https://www.nicehash.com/marketplace/{}'.format(nh.get_algorithm_name(coin_algorithm)),
+            'nicehash_market_link': 'https://www.nicehash.com/algorithm/{}'.format(nh.get_algorithm_name(coin_algorithm)),
             'attack_hourly_cost': cost * btc_price / 24.0 if cost != 0 else '?',
             'attack_hourly_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0) if cost != 0 else '?',
             'network_vs_rentable_ratio': nh_hash_ratio,
-            'rentable_price_btc': rentable_price_btc,
-            'rentable_price_units': nh.get_units(coin_algorithm),
-            'rentable_price_usd_hour': '${:,.2f}'.format(rentable_price_btc * btc_price / 24.0),
+            'rentable_price_btc_day_hash': rentable_price_btc,
             'block_time': coin_block_time
         })
 
