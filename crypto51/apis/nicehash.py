@@ -118,6 +118,8 @@ class NiceHash:
     def get_cost_global(self, algorithm, hash_rate):
         """Return the daily cost of the given hashrate in btc."""
         pricing = self.get_algorithm_price(algorithm)
+        if pricing is None:
+            return
         return pricing * hash_rate
 
     def get_capacity(self, algorithm):
