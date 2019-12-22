@@ -48,7 +48,7 @@ class NiceHash:
         index = self._get_algorithm_index(algorithm)
         if index is None:
             return None
-        amount = self._get_in_nicehash_units(algorithm, amount)
+        amount = self.get_in_nicehash_units(algorithm, amount)
         day_cost_btc = 0.0
         for country in ['eu', 'us']:
             resp = self._session.post('https://api2.nicehash.com/main/api/v2/hashpower/orders/fixedPrice/', {'limit': amount, 'market': country, 'algorithm': algorithm}).json()
@@ -66,20 +66,27 @@ class NiceHash:
                 return day_cost_btc
         return None
 
-    def _get_in_nicehash_units(self, algorithm, value):
-        """Use the buy info endpoint to convert the given value from h/s to the specified units in nicehash."""
+    def get_units(self, algorithm):
         index = self._get_algorithm_index(algorithm)
         units = self._buy_info[index]['speed_text']
+        return units
+
+    def get_in_nicehash_units(self, algorithm, value):
+        """Use the buy info endpoint to convert the given value from h/s to the specified units in nicehash."""
+        return value / self.get_nicehash_unit_scale(algorithm)
+
+    def get_nicehash_unit_scale(self, algorithm):
+        units = self.get_units(algorithm)
         if units == 'PH':
-            return value / (1000.0 ** 5)
+            return 1000.0 ** 5
         elif units == 'TH':
-            return value / (1000.0 ** 4)
+            return 1000.0 ** 4
         elif units == 'GH':
-            return value / (1000.0 ** 3)
+            return 1000.0 ** 3
         elif units in ['MSol', 'MH']:
-            return value / (1000.0 ** 2)
+            return 1000.0 ** 2
         elif units in ['KH', 'kG', 'kSol']:
-            return value / 1000.0
+            return 1000.0
         raise Exception('Unknown units: {}'.format(units))
 
     def get_orders(self, algorithm):

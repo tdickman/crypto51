@@ -45,7 +45,7 @@ if __name__ == '__main__':
             continue
 
         rentable_capacity = nh.get_capacity(coin_algorithm)
-        rentable_price_btc = nh.get_algorithm_price(coin_algorithm)
+        rentable_price_btc = nh.get_algorithm_price(coin_algorithm) * nh.get_nicehash_unit_scale(coin_algorithm)
 
         allcoins.append({
             'symbol': coin_symbol,
@@ -62,7 +62,9 @@ if __name__ == '__main__':
             'attack_hourly_cost': cost * btc_price / 24.0 if cost != 0 else '?',
             'attack_hourly_cost_pretty': '${:,.0f}'.format(cost * btc_price / 24.0) if cost != 0 else '?',
             'network_vs_rentable_ratio': nh_hash_ratio,
-            'rentable_price_btc_day_hash': rentable_price_btc,
+            'rentable_price_btc': '{:.3f}'.format(rentable_price_btc),
+            'rentable_price_units': nh.get_units(coin_algorithm),
+            'rentable_price_usd_hour': '${:,.2f}'.format(rentable_price_btc * btc_price / 24.0),
             'block_time': coin_block_time
         })
 
