@@ -81,7 +81,7 @@ class NiceHash:
             return 1000.0 ** 5
         elif units == 'TH':
             return 1000.0 ** 4
-        elif units == 'GH':
+        elif units in ['GSol', 'GH']:
             return 1000.0 ** 3
         elif units in ['MSol', 'MH']:
             return 1000.0 ** 2
