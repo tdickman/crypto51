@@ -14,7 +14,6 @@ def copy(name):
 def render(api_data):
     copy('style.css')
     copy('about.html')
-    copy('donate.html')
 
     with open('src/index.jinja', 'r') as f:
         template = Template(f.read())
