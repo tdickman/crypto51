@@ -77,7 +77,9 @@ class NiceHash:
 
     def get_nicehash_unit_scale(self, algorithm):
         units = self.get_units(algorithm)
-        if units == 'PH':
+        if units == 'EH':
+            return 1000.0 ** 6
+        elif units == 'PH':
             return 1000.0 ** 5
         elif units == 'TH':
             return 1000.0 ** 4
