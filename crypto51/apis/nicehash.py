@@ -4,6 +4,7 @@ import requests
 # Nicehash name on left, wtm on right
 remap_algorithms = {
     'daggerhashimoto': 'ethash',
+    'randomxmonero': 'randomx'
 }
 
 
